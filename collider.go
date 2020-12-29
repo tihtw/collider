@@ -40,7 +40,7 @@ func NewCollider(rs string) *Collider {
 }
 
 // Run starts the collider server and blocks the thread until the program exits.
-func (c *Collider) Run(p int, useTls bool) {
+func (c *Collider) Run(p int, useTls bool, certFile, keyFile string) {
 	http.Handle("/ws", websocket.Handler(c.wsHandler))
 	http.HandleFunc("/status", c.httpStatusHandler)
 	http.HandleFunc("/", c.httpHandler)
@@ -65,7 +65,7 @@ func (c *Collider) Run(p int, useTls bool) {
 		}
 		server := &http.Server{Addr: pstr, Handler: nil, TLSConfig: config}
 
-		e = server.ListenAndServeTLS("/cert/cert.pem", "/cert/key.pem")
+		e = server.ListenAndServeTLS(certFile, keyFile)
 	} else {
 		e = http.ListenAndServe(pstr, nil)
 	}
