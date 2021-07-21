@@ -34,7 +34,7 @@ func startCollider() {
 		dash:      newDashboard(),
 	}
 
-	go cl.Run(*port, false)
+	go cl.Run(*port, false, "", "")
 	fmt.Println("Test WebSocket server listening on ", serverAddr)
 }
 
